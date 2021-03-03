@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>Multi Conn App</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="jquery-3.4.1.min.js"></script>
+    <!-- <script src="scripts/jquery.signalR-2.2.2.min.js"></script> -->
+    <!-- <script src="https://localhost:44338/signalr/hubs"></script> -->
+    <!--    <script src="wrtchelper.js"></script>-->
+    <script src="app.js"></script>
+
+    <script>
+        $(function() {
+
+            const urlParams = new URLSearchParams(window.location.search);
+
+            var meeting_id = urlParams.get('mid');
+
+            // if (!meeting_id) {
+            //     var murl = window.location.origin + "?mid=" + (new Date()).getTime();
+            //     $('#meetingid').attr('href', murl).text(murl);
+            //     $("#meetingContainer").hide();
+            //     $("#meetingbox").show();
+            //     return;
+            // }
+
+            var user_id = urlParams.get('uid');
+            if (!user_id) {
+                user_id = window.prompt('Enter your nick!');
+            }
+
+            if (!user_id || !meeting_id) {
+                alert('user id or meeting id missing');
+                return;
+            }
+            $("#meetingContainer").show();
+            $("#meetingbox").hide();
+
+            MyApp._init(user_id, meeting_id);
+
+        });
+
+    </script>
+</head>
+
+<body>
+
+    <div id="meetingbox" style="display: none;">
+        <p>It seems you are not trying to join any meeting!
+            You may start a new meeting. Here is generated for you. <a id='meetingid' href="#"></a>
+        </p>
+    </div>
+
+    <main class="container-fluid d-flex flex-column home-wrap">
+
+        <div class="g-top text-light">
+            <div class="top-remote-video-show-wrap">
+
+                <div id="meetingContainer" style="display: none;">
+                    <h1 id='meetingname'></h1>
+                    <div>
+                        <!-- <div style="width:200px;height:300px;float:left;overflow-y: scroll;display:none" id="messages">
+                            <div><input type="text" id="msgbox" /><button id="btnsend">Send</button></div>
+                        </div> -->
+                        <div id='divUsers' style="display:none">
+                            <div id="me" class="userbox">
+                                <h2></h2>
+                                <div>
+                                    <video autoplay muted id="localVideoCtr" />
+                                </div>
+                            </div>
+                            <div id="otherTemplate" class="userbox" style="display:none">
+                                <h2></h2>
+                                <div>
+                                    <video autoplay muted id="remoteVideoCtr111"></video>
+                                    <audio autoplay controls style="display:none" id="remoteAudioCtr111"></audio>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+
+            </div>
+            <div class="g-top-left bg-light text-dark w-25 d-flex align-items-center justify-content-between pl-2 pr-2">
+                <div class="top-left-participant-wrap">
+                    <div class="top-left-participant-icon"><span class="material-icons">
+                            people
+                        </span></div>
+                    <div class="top-left-participant-count">4</div>
+                </div>
+                <div class="top-left-chat-wrap">
+                    <span class="material-icons">
+                        message
+                    </span>
+                </div>
+                <div class="top-left-time-wrap">
+
+
+                </div>
+                <div class="top-left-you-wrap text-light">You</div>
+            </div>
+
+        </div>
+        <div class="g-bottom bg-light m-0 d-flex justify-content-between align-items-center">
+            <div class="bottom-left d-flex" style="height:10vh;">
+                <div class="g-detail">
+                    <div class="g-details-heading  d-flex justify-content-between align-items-center border-bottom">
+                        <div class="g-details-heading-detail d-flex align-items-center">
+                            <span><span class="material-icons">
+                                    error
+                                </span></span><span style="    margin-top: -5px;">Details</span>
+                        </div>
+                        <div class="g-details-heading-attachment  d-flex align-items-center">
+                            <span><span class="material-icons">
+                                    attachment
+                                </span></span><span style="    margin-top: -5px;">attachment</span>
+                        </div>
+                    </div>
+                    <div class="g-details-heading-show">
+                        <div style="font-weight: 600">Joining Info</div>
+                        <div style="padding: 5px 0">http://meet.google.co</div>
+                        <div>
+                            <span class="material-icons" style="font-size: 14px">
+                                content_copy
+                            </span><span>Copy Joining Info</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="display-center">Meeting Details <span class="material-icons">
+                        keyboard_arrow_down
+                    </span></div>
+            </div>
+
+            <div class="bottom-middle d-flex justify-content-center align-items-center" style="height:10vh;">
+                <div class="mic-toggle-wrap action-icon-style display-center mr-2 cursor-pointer" id="btnMuteUnmute">
+                    <span class="material-icons">
+                        mic_off
+                    </span>
+                </div>
+               
+                <div class="end-call-wrap action-icon-style display-center mr-2 cursor-pointer">
+                    <span class="material-icons text-danger">
+                        call
+                    </span>
+                </div>
+            
+                <div class="video-toggle-wrap action-icon-style display-center cursor-pointer" id="btnStartStopCam"><span class="material-icons">
+                        videocam_off
+                    </span></div>
+
+            </div>
+            <div class="bottom-right d-flex justify-content-center align-items-center mr-3 " style="height:10vh;">
+                <div class="present-now-wrap d-flex justify-content-center flex-column align-items-center  mr-5 cursor-pointer" id="btnStartStopScreenshare" style="height:10vh;">
+                    <div class="present-now-icon">
+                        <span class="material-icons">
+                            present_to_all
+                        </span>
+                    </div>
+                    <div>Present Now</div>
+                </div>
+                <button style="display: none;" id="btnResetMeeting">Reset Meeting</button>
+                <div class="option-wrap cursor-pointer display-center" style="height:10vh;">
+                    <div class="option-icon">
+                        <span class="material-icons">
+                            more_vert
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-box-show" style="display: none;">
+            
+        </div>
+
+    </main>
+<script>
+    $(function(){
+        $(document).on('click','.end-call-wrap', function(){
+            $('.top-box-show').css({"display":"block"}).html('<div class="top-box align-vertical-middle profile-dialoge-show "> <h1 class="mt-2">Leave Meeting</h1> <hr> <div class="call-leave-cancel-action d-flex justify-content-center align-items-center w-100"> <a href="log.html"><button class="call-leave-action btn btn-danger mr-5">Leave</button></a> <button class="call-cancel-action btn btn-secondary">Cancel</button> </div> </div>');
+            
+        })
+        $(document).mouseup(function(e) {
+                var container = new Array();
+                container.push($('.top-box-show'));
+                $.each(container, function(key, value) {
+                    if (!$(value).is(e.target) && $(value).has(e.target).length === 0) {
+                        $(value).empty();
+                    }
+                })
+
+            })
+            $(document).on('click','.call-cancel-action', function(){
+                $('.top-box-show').html('');
+            })
+    })
+</script>
+</body>
+
+</html>
