@@ -63,9 +63,9 @@
     <main class="container-fluid d-flex flex-column home-wrap">
 
         <div class="g-top text-light">
-            <div class="top-remote-video-show-wrap">
+            <div class="top-remote-video-show-wrap d-flex">
 
-                <div id="meetingContainer" style="display: none;">
+                <div id="meetingContainer" style="display: none;flex-basis: 75%;">
                     <h1 id='meetingname'></h1>
                     <div>
                         <!-- <div style="width:200px;height:300px;float:left;overflow-y: scroll;display:none" id="messages">
@@ -89,8 +89,79 @@
                     </div>
             
                 </div>
-
+                <div class="g-right-details-wrap bg-light text-secondary h-100" style="flex-basis: 25%;z-index: 1;">
+                <div class="meeting-heading-wrap d-flex justify-content-between align-items-center pr-3 pl-3" style="height: 10vh;">
+                    <div class="meeting-heading font-weight-bold"> Meeting Details</div>
+                    <div class="meeting-heading-cross display-center cursor-pointer">
+                        <span class="material-icons">
+                            clear
+                            </span>
+                    </div>
+                </div>
+                <div class="people-chat-wrap d-flex justify-content-between align-items-center border-bottom ml-3 mr-3 pl-3 pr-3" style="height: 10vh;font-size: 14px;">
+                    <div class="people-heading display-center cursor-pointer">
+                        <div class="people-heading-icon display-center mr-1">
+                            <span class="material-icons">
+                                people
+                                </span>
+                        </div>
+                        <div class="people-heading-text display-center ">Participant (<span class="participant-count">3</span>)</div>
+                    </div>
+                    <div class="chat-heading d-flex justify-content-around align-items-center cursor-pointer">
+                        <div class="chat-heading-icon display-center mr-1"><span class="material-icons">
+                            message
+                            </span></div>  
+                        <div class="chat-heading-text">
+                            Chat
+                        </div>  
+                    </div>
+                </div>
+                <div class="in-call-chat-wrap mr-3 ml-3 mt-4" style="font-size: 14px;"> 
+                    <div class="in-call-wrap d-flex justify-content-between align-items-center mb-3" style="display: none !important;">
+                        <div class="participant-img-name-wrap display-center cursor-pointer">
+                            <div class="participant-img">
+                                <img src="images/me2.png" alt="" class="border border-secondary" style="height: 40px;width: 40px;border-radius: 50%;">
+                            </div>
+                            <div class="participant-name ml-2">Km Habib</div>
+                        </div>
+                        <div class="participant-action-wrap display-center">
+                            <div class="participant-action-dot display-center mr-2 cursor-pointer">
+                                <span class="material-icons">
+                                    more_vert
+                                    </span>
+                            </div>
+                            <div class="participant-action-pin display-center cursor-pointer">
+                                <span class="material-icons">
+                                    push_pin
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-show-wrap text-secondary" style="font-size:14px;">
+                        <div class="chat-message-show">
+                            <div class="chat-message-show-name-time d-flex justify-content-start align-items-center">
+                                <div class="chat-message-show-name font-weight-bold" style="color: black;">You</div>
+                                <div class="chat-message-show-time ml-2">10:33PM</div>
+                            </div>
+                            <div class="chat-message-show-text d-flex justify-content-start align-items-center" style="color: rgb(37, 37, 37);">How are you?</div>
+                        </div>
+                        <div class="chat-message-sent d-flex justify-content-between align-items-center" style="margin-bottom: 35px;">
+                            <div class="chat-message-sent-input" style="width: 85%;">
+                                <input type="text" name="" class="chat-message-sent-input-field w-100" placeholder="Send a message to everyone" style="border: navajowhite;border-bottom: 1px solid teal;">
+                            </div>
+                            <div class="chat-message-sent-action display-center" style="color: teal;cursor: pointer;">
+                                <span class="material-icons">
+                                    send
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                </div>
             </div>
+            
+            
             <div class="g-top-left bg-light text-dark w-25 d-flex align-items-center justify-content-between pl-2 pr-2">
                 <div class="top-left-participant-wrap">
                     <div class="top-left-participant-icon"><span class="material-icons">

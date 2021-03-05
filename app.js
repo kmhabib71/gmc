@@ -439,7 +439,7 @@ var MyApp = (function () {
     user_id = uid;
     meeting_id = mid;
 
-    $("#meetingname").text(meeting_id);
+    // $("#meetingname").text(meeting_id);
     $("#me h2").text(user_id + "(Me)");
     document.title = user_id;
 

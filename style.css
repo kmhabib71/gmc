@@ -126,6 +126,8 @@ img.signin-image {
     /*    height: 10vh;*/
     margin: 0 -10px !important;
     padding: 0 20px;
+    box-shadow: 0px 0px 5px black;
+    z-index: 2;
 }
 
 .home-wrap {
@@ -181,10 +183,13 @@ img.signin-image {
 
 .cursor-pointer {
     cursor: pointer;
+    padding: 5px;
 }
 .cursor-pointer:hover {
     cursor: pointer;
-    background-color: lightgray;
+    background-color: rgb(226, 225, 225);
+    padding: 5px;
+    border-radius: 5px;
 
 }
 
@@ -241,4 +246,24 @@ img.signin-image {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+}
+.in-call-chat-wrap.mr-3.ml-3 {
+    height: 69vh;
+    overflow-y: scroll;
+}
+.in-call-chat-wrap::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .in-call-chat-wrap{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .chat-show-wrap.text-secondary {
+    font-size: 14px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
