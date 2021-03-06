@@ -480,6 +480,7 @@ var MyApp = (function () {
 
     socket.on("informAboutConnectionEnd", function (connId) {
       $("#" + connId).remove();
+      $("#participant_" + connId + "").remove();
       WrtcHelper.closeExistingConnection(connId);
     });
 
@@ -542,6 +543,9 @@ var MyApp = (function () {
     $newDiv.find("audio").attr("id", "a_" + connId);
     $newDiv.show();
     $("#divUsers").append($newDiv);
+    $(".chat-message-show").append(
+      "<br><div id='participant_" + connId + "'>" + other_user_id + "<div>"
+    );
   }
 
   return {

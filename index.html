@@ -91,7 +91,7 @@
                 </div>
                 <div class="g-right-details-wrap bg-light text-secondary h-100" style="flex-basis: 25%;z-index: 1;">
                 <div class="meeting-heading-wrap d-flex justify-content-between align-items-center pr-3 pl-3" style="height: 10vh;">
-                    <div class="meeting-heading font-weight-bold"> Meeting Details</div>
+                    <div class="meeting-heading font-weight-bold cursor-pointer"> Meeting Details</div>
                     <div class="meeting-heading-cross display-center cursor-pointer">
                         <span class="material-icons">
                             clear
@@ -138,7 +138,7 @@
                         </div>
                     </div>
                     <div class="chat-show-wrap text-secondary" style="font-size:14px;">
-                        <div class="chat-message-show">
+                        <div class="chat-message-show" id="messages">
                             <div class="chat-message-show-name-time d-flex justify-content-start align-items-center">
                                 <div class="chat-message-show-name font-weight-bold" style="color: black;">You</div>
                                 <div class="chat-message-show-time ml-2">10:33PM</div>
@@ -147,9 +147,9 @@
                         </div>
                         <div class="chat-message-sent d-flex justify-content-between align-items-center" style="margin-bottom: 35px;">
                             <div class="chat-message-sent-input" style="width: 85%;">
-                                <input type="text" name="" class="chat-message-sent-input-field w-100" placeholder="Send a message to everyone" style="border: navajowhite;border-bottom: 1px solid teal;">
+                                <input type="text" name="" class="chat-message-sent-input-field w-100" id="msgbox" placeholder="Send a message to everyone" style="border: navajowhite;border-bottom: 1px solid teal;">
                             </div>
-                            <div class="chat-message-sent-action display-center" style="color: teal;cursor: pointer;">
+                            <div class="chat-message-sent-action display-center" id="btnsend" style="color: teal;cursor: pointer;">
                                 <span class="material-icons">
                                     send
                                     </span>
