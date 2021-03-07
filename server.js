@@ -43,11 +43,13 @@ io.on("connection", (socket) => {
       user_id: data.dsiplayName,
       meeting_id: data.meetingid,
     });
-
+    var userCount = _userConnections.length;
+    console.log(userCount);
     other_users.forEach((v) => {
       socket.to(v.connectionId).emit("informAboutNewConnection", {
         other_user_id: data.dsiplayName,
         connId: socket.id,
+        userNumber: userCount,
       });
     });
 
@@ -118,7 +120,13 @@ io.on("connection", (socket) => {
       var list = _userConnections.filter((p) => p.meeting_id == meetingid);
 
       list.forEach((v) => {
-        socket.to(v.connectionId).emit("informAboutConnectionEnd", socket.id);
+        var userCou = _userConnections.length;
+        socket
+          .to(v.connectionId)
+          .emit("informAboutConnectionEnd", {
+            connId: socket.id,
+            userCoun: userCou,
+          });
       });
     }
   });

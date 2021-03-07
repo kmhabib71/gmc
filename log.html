@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://getbootstrap.com/docs/4.0/examples/jumbotron/# -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!-- <link href="assets/css/jumbotron.css" rel="stylesheet"> -->
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="height:64px;background-color: white;">
+        <img src="images/google-meet-icon.png" class="logo" alt="">
+        <a class="navbar-brand text-dark" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/#">Google Meet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/#">At a glance <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/#">How it works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/#">Plan and Price</a>
+                </li>
+                
+            </ul>
+            <ul class="navbar-nav mr-0">
+                <li class="nav-item signin">
+                    <a class="nav-link" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/#">Sign in</a>
+                </li>
+                <li class="nav-item join-in-meeting">
+                    <button class="btn btn-outline-secondary btn-lg text-primary font-weight-bold" >Join the meeting</button>
+                </li>
+                <li class="nav-item host-meeting">
+                    <button class="btn btn-primary btn-lg text-light font-weight-bold" >Start the meeting</button>
+                </li>
+              
+                
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main">
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class=" d-flex ml-5" style="margin-top: 150px;"> 
+            <div class="container w-50">
+                <h1 style="font-size: 50px;">Premium video meeting. Now it is available for free to everyone.</h1>
+                <p style="font-size: 20px ;">We're redesigning the Google Meet service for secure business meetings and making it free for everyone to use.</p>
+                <ul class="display-center" style="
+                justify-content: flex-start;">
+                <li class="nav-item host-meeting" style="padding:0">
+                    <button class="btn  btn-lg text-light font-weight-bold display-center" style="background-color: #01796b;"><span class="material-icons" style="margin-right: 10px;">
+                        video_call
+                        </span>New Meeting</button>
+                </li>
+                <li class="nav-item" style="padding:0 0 0 20px;">
+                    <button class="btn btn-outline-secondary  btn-lg text-dark font-weight-bold display-center meetingid-input-wrap" style="background-color: #ffffff;"><span class="material-icons" style="margin-right: 10px;">
+                        keyboard
+                        </span><input type="text" placeholder="Enter a code" style="border: none;" class="join-value"></button>
+                </li>
+                <li class="nav-item text-dark join-submit" style="padding:0 0 0 20px;font-weight: 600;cursor: pointer;">
+                    Join
+                </li>
+            </ul>
+            </div>
+            <div class="container w-50">
+                <img src="images/google-meet-people.jpg" alt="" class="signin-image">
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-secondary" href="https://getbootstrap.com/docs/4.0/examples/jumbotron/#" role="button">View details »</a></p> -->
+                </div>
+
+            </div>
+
+            <hr>
+
+        </div> <!-- /container -->
+
+    </main>
+
+    <footer class="container">
+        <h6>Learn more about <a href="#" class="text-info">google meet</a>  </h6>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery-3.4.1.min.js"></script>
+<script>
+    $(function(){
+        $(document).on('click','.join-in-meeting',function(){
+            $("input.join-value").focus();
+            $("button.btn.btn-outline-secondary.btn-lg.text-dark.font-weight-bold.display-center.meetingid-input-wrap").css({"background-color":"#f5aa3b7d"});
+        })
+        $(document).on("click", ".host-meeting", function() {
+                let eight_d_number = Math.floor(Math.random() * 100000000);
+                let meetingUrl = window.location.origin + "?meetingID=" + eight_d_number;
+                window.location.replace(meetingUrl);
+
+            })
+
+
+
+        $(document).on("click", ".join-submit", function(e) {
+                e.preventDefault(e);
+                var meeting_value = $("input.join-value").val();
+                let meetingUrl = window.location.origin + "?meetingID=" + meeting_value;
+                window.location.replace(meetingUrl);
+
+            })
+    })
+        
+</script>
+
+</body>
+
+</html>

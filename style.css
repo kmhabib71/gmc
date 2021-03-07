@@ -11,26 +11,25 @@ a:hover {
     text-decoration: none;
     background-color: transparent;
 }
-.userbox {
+/* .userbox {
     margin-left: 20px;
     padding: 8px;
     width: 450px;
-    /* height:366px; */
     border: 1px solid transparent;
     color: var(--fc-medium);
     border-color: var(--powder-400);
     background-color: burlywood;
     float: left;
-}
+} */
 
-.userbox video {
+/* .userbox video {
     display: inline-block;
     border: 1px solid red;
     margin: 0;
     padding: 0;
     width: 450px;
     height: 300px;
-}
+} */
 
 .footer{
     font-size: large;
@@ -146,7 +145,7 @@ img.signin-image {
     position: absolute;
     width: 30vw;
     background-color: white;
-    margin-top: -130px;
+    margin-top: -135px;
     color: black;
     border-radius: 5px;
     padding: 5px;
@@ -156,13 +155,7 @@ img.signin-image {
     padding: 5px;
 }
 
-.bottom-left:hover {
-    background-color: lightgray
-}
 
-.bottom-left:active {
-    background-color: lightgray
-}
 
 .g-details-heading-show {
     font-size: 14px;
@@ -266,4 +259,32 @@ img.signin-image {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.video-wrap {
+    /* width: 60vw; */
+    height: 600px;
+}
+
+.video-wrap > * {
+
+    flex: 1 1 250px;
+    border: 1px solid white;
+    /* background-color:brown; */
+}
+
+
+.call-wrap {
+    position: relative;
+    display: block;
+    padding: 10px;
+}
+.div-center-column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+video{
+    border: 1px solid;
 }

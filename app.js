@@ -474,14 +474,15 @@ var MyApp = (function () {
     });
 
     socket.on("informAboutNewConnection", function (data) {
-      AddNewUser(data.other_user_id, data.connId);
+      AddNewUser(data.other_user_id, data.connId, data.userNumber);
       WrtcHelper.createNewConnection(data.connId);
     });
 
-    socket.on("informAboutConnectionEnd", function (connId) {
-      $("#" + connId).remove();
-      $("#participant_" + connId + "").remove();
-      WrtcHelper.closeExistingConnection(connId);
+    socket.on("informAboutConnectionEnd", function (data) {
+      $("#" + data.connId).remove();
+      $(".participant-count").text(data.userCoun);
+      $("#participant_" + data.connId + "").remove();
+      WrtcHelper.closeExistingConnection(data.connId);
     });
 
     socket.on("showChatMessage", function (data) {
@@ -506,10 +507,16 @@ var MyApp = (function () {
     });
 
     socket.on("userconnected", function (other_users) {
+      var userNumber = other_users.length;
+      var userNumb = userNumber + 1;
       $("#divUsers .other").remove();
       if (other_users) {
         for (var i = 0; i < other_users.length; i++) {
-          AddNewUser(other_users[i].user_id, other_users[i].connectionId);
+          AddNewUser(
+            other_users[i].user_id,
+            other_users[i].connectionId,
+            userNumb
+          );
           WrtcHelper.createNewConnection(other_users[i].connectionId);
         }
       }
@@ -534,8 +541,8 @@ var MyApp = (function () {
       this.requestFullscreen();
     });
   }
-
-  function AddNewUser(other_user_id, connId) {
+  var userNum;
+  function AddNewUser(other_user_id, connId, userNum) {
     var $newDiv = $("#otherTemplate").clone();
     $newDiv = $newDiv.attr("id", connId).addClass("other");
     $newDiv.find("h2").text(other_user_id);
@@ -543,9 +550,15 @@ var MyApp = (function () {
     $newDiv.find("audio").attr("id", "a_" + connId);
     $newDiv.show();
     $("#divUsers").append($newDiv);
-    $(".chat-message-show").append(
-      "<br><div id='participant_" + connId + "'>" + other_user_id + "<div>"
+    $(".in-call-wrap-up").append(
+      '<div class="in-call-wrap d-flex justify-content-between align-items-center mb-3" id="participant_' +
+        connId +
+        '" style=""> <div class="participant-img-name-wrap display-center cursor-pointer"> <div class="participant-img"> <img src="images/me2.png" alt="" class="border border-secondary" style="height: 40px;width: 40px;border-radius: 50%;"> </div> <div class="participant-name ml-2">' +
+        other_user_id +
+        '</div> </div> <div class="participant-action-wrap display-center"> <div class="participant-action-dot display-center mr-2 cursor-pointer"> <span class="material-icons"> more_vert </span> </div> <div class="participant-action-pin display-center cursor-pointer"> <span class="material-icons"> push_pin </span> </div> </div> </div>'
     );
+
+    $(".participant-count").text(userNum);
   }
 
   return {
