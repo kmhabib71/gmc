@@ -486,8 +486,21 @@ var MyApp = (function () {
     });
 
     socket.on("showChatMessage", function (data) {
-      var div = $("<div>").text(
-        data.from + "(" + data.time + "):" + data.message
+      var time = new Date();
+      // var timeDiv = document.getElementsByClassName("top-left-time-wrap");
+      var lTime = time.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+
+      var div = $("<div>").html(
+        "<span class='font-weight-bold mr-3' style='color:black'>" +
+          data.from +
+          "</span> " +
+          lTime +
+          "</br>" +
+          data.message
       );
       $("#messages").append(div);
     });

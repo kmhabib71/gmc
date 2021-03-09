@@ -165,13 +165,13 @@
             
             
             <div class="g-top-left bg-light text-secondary w-25 d-flex align-items-center justify-content-between pl-2 pr-2">
-                <div class="top-left-participant-wrap">
+                <div class="top-left-participant-wrap pt-2 cursor-pointer">
                     <div class="top-left-participant-icon"><span class="material-icons">
                             people
                         </span></div>
                     <div class="top-left-participant-count">4</div>
                 </div>
-                <div class="top-left-chat-wrap">
+                <div class="top-left-chat-wrap pt-2 cursor-pointer">
                     <span class="material-icons">
                         message
                     </span>
@@ -262,8 +262,18 @@
     </main>
 <script>
     $(function(){
+        var time = new Date();
+        var timeDiv = document.getElementsByClassName("top-left-time-wrap");
+        timeDiv[0].innerHTML = time.toLocaleString('en-US', {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        })
        
-       
+        $(document).on('click','.meeting-heading-cross',function(){
+            $(".g-right-details-wrap").hide(300);
+        
+        });
         $(document).on('click','.chat-heading',function(){
             $(".in-call-wrap-up").hide(300);
         $(".chat-show-wrap").show(300);
