@@ -1,30 +1,43 @@
-//const express = require('express')
-//const app = express()
-//
-//var _userConnections =[];
-////routes
-//app.get('/', (req, res) => {
-//	res.render('index')
-//})
+require("./models/db");
 
-const path = require("path");
-const http = require("http");
-const socketio = require("socket.io");
 const express = require("express");
-const app = express();
+const path = require("path");
+const exphbs = require("express-handlebars");
+const bodyparser = require("body-parser");
+
+const employeeController = require("./controllers/employeeController");
+const homeController = require("./controllers/homeController");
+const fileUpload = require("express-fileupload");
+const fs = require("fs");
 var connectionId;
 var _userConnections = [];
-//routes
-//app.get('/', (req, res) => {
-//    res.render('index')
-//})
-app.use(express.static(path.join(__dirname, "")));
-//Listen on port 3000
-//Listen on port 3000
+var app = express();
+app.use(
+  bodyparser.urlencoded({
+    extended: true,
+  })
+);
+app.use(bodyparser.json());
+app.set("views", path.join(__dirname, "/views/"));
+app.engine(
+  "hbs",
+  exphbs({
+    extname: "hbs",
+    defaultLayout: "mainLayout",
+    layoutsDir: __dirname + "/views/layouts/",
+  })
+);
+app.use(express.static(path.join(__dirname, "public")));
+app.set("view engine", "hbs");
 
+// app.listen(3000, () => {
+//   console.log("Express server started at port : 3000");
+// });
+
+app.use("/employee", employeeController);
+app.use("/", homeController);
 server = app.listen(3000);
-
-//socket.io instantiation
+/*   for webrtc application */
 const io = require("socket.io")(server);
 
 //listen on every connection
@@ -121,12 +134,10 @@ io.on("connection", (socket) => {
 
       list.forEach((v) => {
         var userCou = _userConnections.length;
-        socket
-          .to(v.connectionId)
-          .emit("informAboutConnectionEnd", {
-            connId: socket.id,
-            userCoun: userCou,
-          });
+        socket.to(v.connectionId).emit("informAboutConnectionEnd", {
+          connId: socket.id,
+          userCoun: userCou,
+        });
       });
     }
   });
@@ -154,3 +165,93 @@ function getCurrDateTime() {
     seconds;
   return dt;
 }
+
+// .........for file fileUpload.............
+app.use(fileUpload());
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+var gameSchema = new mongoose.Schema({
+  title: String,
+  creator: String,
+  width: Number,
+  height: Number,
+  fileName: String,
+  thumbnailFile: String,
+  meetingid: String,
+  username: String,
+});
+
+var Game = mongoose.model("Game", gameSchema);
+
+// app.get("/addgame", function (req, res) {
+//   res.render("home/addgame");
+// });
+
+app.post("/attachimg_other_info", function (req, res) {
+  var meeting_idd = req.body.meeting_id;
+  res.send(meeting_idd);
+});
+app.post("/attachimg", function (req, res) {
+  var data = req.body;
+
+  //a variable representation of the files
+  // var gameFile = req.files.gamefile;
+  var imageFile = req.files.zipfile;
+  console.log(imageFile);
+  //Using the files to call upon the method to move that file to a folder
+  // gameFile.mv("public/images/" + gameFile.name, function (error) {
+  //   if (error) {
+  //     console.log("Couldn't upload the game file");
+  //     console.log(error);
+  //   } else {
+  //     console.log("Game file succesfully uploaded.");
+  //   }
+  // });
+  var dir = "public/attachment/" + data.meeting_id + "/";
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+  imageFile.mv(
+    "public/attachment/" + data.meeting_id + "/" + imageFile.name,
+    function (error) {
+      if (error) {
+        console.log("Couldn't upload the image file");
+        console.log(error);
+      } else {
+        console.log("Image file succesfully uploaded.");
+      }
+    }
+  );
+
+  Game.create(
+    {
+      title: data.title,
+      creator: data.creator,
+      width: data.width,
+      height: data.height,
+      thumbnailFile: imageFile.name,
+      meetingid: data.meeting_id,
+      username: data.username,
+    },
+    function (error, data) {
+      if (error) {
+        console.log("There was a problem adding this game to the database");
+      } else {
+        console.log("Game added to database");
+        console.log(data);
+      }
+    }
+  );
+  // res.redirect("/?meetingID=324234324");
+  res.send(data.creator);
+  // return true;
+  // res.writeHead(200, { "Content-Type": "text/plain" });
+  // res.write("feeling cool");
+  // res.end();
+});
