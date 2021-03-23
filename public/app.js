@@ -445,8 +445,39 @@ var MyApp = (function () {
 
     SignalServerEventBinding();
     EventBinding();
+    $(document).on("click", ".share-button-wrap", function () {
+      var attachFileArea = document.querySelector(".show-attach-file");
+      var fileeName = $("#customFile").val().split("\\").pop();
+      alert(fileeName);
+      var FileePath = "/attachment/" + meeting_id + "/" + fileeName + "";
+      // send({
+      //   type: "filee",
+      //   username: user_id,
+      //   meetingid: meeting_id,
+      //   FileePath: FileePath,
+      //   fileeName: fileeName,
+      // });
+      attachFileArea.innerHTML +=
+        "<div class='left-align' style='display:flex;align-items:center;'><img src='assets/images/other.jpg' style='height:40px;width:40px;' class='caller-image circle'><div style='font-weight:600;margin:0 5px;'>" +
+        user_id +
+        "</div>: <div><a style='color:#007bff;' href='" +
+        FileePath +
+        "' download>" +
+        fileeName +
+        "</a></div></div><br/>";
+      $("label.custom-file-label").text("");
+      socket.emit("fileTransferToOther", {
+        username: user_id,
+        meetingid: meeting_id,
+        FileePath: FileePath,
+        fileeName: fileeName,
+      });
+    });
   }
 
+  // function sentFileFunc(FileSenderMeetingID, FileSenderUsername) {
+
+  // }
   function SignalServerEventBinding() {
     // Set up the SignalR connection
     //$.connection.hub.logging = true;
@@ -503,6 +534,35 @@ var MyApp = (function () {
           data.message
       );
       $("#messages").append(div);
+    });
+    socket.on("showFileMessage", function (data) {
+      var time = new Date();
+      // var timeDiv = document.getElementsByClassName("top-left-time-wrap");
+      var lTime = time.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+
+      var attachFileArea = document.querySelector(".show-attach-file");
+      // var fileeName = $("#customFile").val().split("\\").pop();
+      // alert(fileeName);
+      // var FileePath = "/attachment/" + meeting_id + "/" + fileeName + "";
+      // send({
+      //   type: "filee",
+      //   username: user_id,
+      //   meetingid: meeting_id,
+      //   FileePath: FileePath,
+      //   fileeName: fileeName,
+      // });
+      attachFileArea.innerHTML +=
+        "<div class='left-align' style='display:flex;align-items:center;'><img src='assets/images/other.jpg' style='height:40px;width:40px;' class='caller-image circle'><div style='font-weight:600;margin:0 5px;'>" +
+        data.username +
+        "</div>: <div><a style='color:#007bff;' href='" +
+        data.FileePath +
+        "' download>" +
+        data.fileeName +
+        "</a></div></div><br/>";
     });
 
     socket.on("connect", () => {

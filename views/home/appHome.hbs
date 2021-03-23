@@ -1,5 +1,3 @@
-<h3>{{viewTitle}}</h3>
-
 <!DOCTYPE html>
 <html>
 
@@ -55,7 +53,10 @@
 </head>
 
 <body>
-
+    <h1>Hello</h1>
+    {{#each listt}}
+    <h3>{{this.thumbnailFile}}fff</h3>
+    {{/each}}
     <div id="meetingbox" style="display: none;">
         <p>It seems you are not trying to join any meeting!
             You may start a new meeting. Here is generated for you. <a id='meetingid' href="#"></a>
@@ -224,7 +225,7 @@
                         <div class="g-details-heading-show-attachment" style="display: none;position:relative;
                             font-size: 14px;">
                             <div class="show-attach-file">
-                                sdfsdfsdfs <br>sdfsdfsdf <br>dfsdfssdf
+
                             </div>
                             <div class="upload-attach-file">
                                 {{!-- <form action="" method="POST" enctype="multipart/form-data" ref='uploadForm'
@@ -244,8 +245,10 @@
                                         <label class="custom-file-label" for="customFile">Choose file</label>
 
                                     </div>
-                                    <button class="btn btn-primary btn-sm share-attach"
-                                        style="flex-basis:19%;padding: 6px 0;">Share</button>
+                                    <div class="share-button-wrap">
+                                        <button class="btn btn-primary btn-sm share-attach"
+                                            style="flex-basis:19%;padding: 6px 20px;">Share</button>
+                                    </div>
 
                                 </form>
                             </div>
@@ -253,10 +256,11 @@
                     </div>
                 </div>
 
-                <div class="display-center cursor-pointer meeting-details-button">Meeting Details <span
+                <div class=" display-center cursor-pointer meeting-details-button">Meeting Details <span
                         class="material-icons">
                         keyboard_arrow_down
-                    </span></div>
+                    </span>
+                </div>
             </div>
 
             <div class="bottom-middle d-flex justify-content-center align-items-center" style="height:10vh;">

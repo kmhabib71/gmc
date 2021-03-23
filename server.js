@@ -120,6 +120,28 @@ io.on("connection", (socket) => {
     }
   }); //end of reset
 
+  socket.on("fileTransferToOther", function (msg) {
+    console.log(msg);
+    var userObj = _userConnections.find((p) => p.connectionId == socket.id);
+    if (userObj) {
+      var meetingid = userObj.meeting_id;
+      var from = userObj.user_id;
+
+      var list = _userConnections.filter((p) => p.meeting_id == meetingid);
+      console.log(list);
+
+      list.forEach((v) => {
+        socket.to(v.connectionId).emit("showFileMessage", {
+          from: from,
+          username: msg.username,
+          meetingid: msg.meetingid,
+          FileePath: msg.FileePath,
+          fileeName: msg.fileeName,
+          time: getCurrDateTime(),
+        });
+      });
+    }
+  });
   socket.on("disconnect", function () {
     console.log("Got disconnect!");
 
